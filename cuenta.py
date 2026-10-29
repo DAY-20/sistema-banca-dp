@@ -30,10 +30,21 @@ class CuentaCorriente(Cuenta):
         return "Corriente"
 # Prueba 1:
 mi_cuenta = CuentaAhorros("DAY", 1000)
-mi_cuenta.depositar(500)
-print(mi_cuenta.tipo(), mi_cuenta.saldo)
 mi_cuenta.mostrar_saldo()
-
+# Depósito
+try:
+    mi_cuenta.depositar(500)
+    print("Depósito exitoso")
+except ValueError as error:
+    print(f"No se pudo depositar: {error}")
+mi_cuenta.mostrar_saldo()
+# Retiro
+try:
+    mi_cuenta.retirar(2000)
+    print("Retiro exitoso")
+except ValueError as error:
+    print(f"No se pudo retirar: {error}")
+mi_cuenta.mostrar_saldo()
 
 
 
