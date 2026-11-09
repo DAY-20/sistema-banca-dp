@@ -1,6 +1,6 @@
 from cuenta import Cuenta, CuentaAhorros, CuentaCorriente
 class Transferencia:
-"""Transferencia ya validada"""
+    """Transferencia ya validada"""
     def __init__(self, origen, destino, monto):
         self.origen = origen
         self.destino = destino
@@ -11,7 +11,7 @@ class Transferencia:
                 f"de {self.origen.titular} a {self.destino.titular}")
 
 class TransferenciaBuilder:
-"""Arma una Transferencia paso a paso y la valida"""
+    """Armar una Transferencia y valida"""
     def __init__(self):
         self._origen = None
         self._destino = None
@@ -30,7 +30,7 @@ class TransferenciaBuilder:
         return self
 
     def construir(self):
- """Valida y entrega la Transferencia, o lanza un error"""
+     """Valida y entrega la Transferencia, o lanza un error"""
         if self._origen is None or self._destino is None:
             raise ValueError("Faltan la cuenta origen o la cuenta destino")
         if self._origen is self._destino:
@@ -40,3 +40,24 @@ class TransferenciaBuilder:
         if self._origen.saldo < self._monto:
             raise ValueError("Saldo insuficiente")
         return Transferencia(self._origen, self._destino, self._monto)
+
+if __name__ == "__main__":
+    bry = CuentaAhorros("Bry", 500)
+    dayanna = CuentaCorriente("Dayanna", 1000)
+    # Cada caso, incluye una descripción, cuenta origen, cuenta destino, monto
+    casos = [
+        ("Monto válido", dayanna, bry, 300),
+        ("Monto muy alto", dayanna, bry, 5000),
+        ("Monto negativo", dayanna, bry, -10),
+        ("Misma cuenta", dayanna, dayanna, 100),
+    ]
+    for descripcion, origen, destino, monto in casos:
+        try:
+            transferencia = (TransferenciaBuilder()
+                             .con_origen(origen)
+                             .con_destino(destino)
+                             .con_monto(monto)
+                             .construir())
+            print(f"{descripcion}: {transferencia}")
+        except ValueError as error:
+            print(f"{descripcion}: no se pudo crear ({error})")
