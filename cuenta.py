@@ -28,6 +28,7 @@ class CuentaAhorros(Cuenta):
 class CuentaCorriente(Cuenta):
     def tipo(self):
         return "Corriente"
+if __name__ == "__main__":
 # Prueba 1:
 mi_cuenta = CuentaAhorros("DAY", 1000)
 mi_cuenta.mostrar_saldo()
