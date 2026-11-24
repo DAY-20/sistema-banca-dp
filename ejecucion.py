@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     transferencia = (TransferenciaBuilder()
                      .con_origen(dayanna)
-                     .con_destino(ana)
+                     .con_destino(bry)
                      .con_monto(300)
                      .con_comision(ComisionCorriente())
                      .construir())
