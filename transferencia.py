@@ -1,8 +1,11 @@
 from cuenta import Cuenta, CuentaAhorros, CuentaCorriente
 from comisiones import ComisionAhorros, ComisionCorriente
+
+
 class Transferencia:
-    """ final: transferencia ya validada"""
-    def __init__(self, origen, destino, monto):
+    """ final de transferencia ya validada"""
+
+    def __init__(self, origen, destino, monto, comision=0):
         self.origen = origen
         self.destino = destino
         self.monto = monto
@@ -11,16 +14,18 @@ class Transferencia:
 
     def __str__(self):
         return (f"Transferencia de S/. {self.monto} "
-                f"de {self.origen.titular} a {self.destino.titular}"
+                f"de {self.origen.titular} a {self.destino.titular} "
                 f"| comisión S/. {self.comision} | total S/. {self.total}")
 
+
 class TransferenciaBuilder:
-    """Armar una Transferencia y valida"""
+    """ armar una Transferencia y validarla"""
+
     def __init__(self):
         self._origen = None
         self._destino = None
         self._monto = None
-        self._strategia = None
+        self._estrategia = None
 
     def con_origen(self, cuenta):
         self._origen = cuenta
@@ -37,15 +42,16 @@ class TransferenciaBuilder:
     def con_comision(self, estrategia):
         self._estrategia = estrategia
         return self
-    
+
     def construir(self):
-     """Valida y entrega la Transferencia, o lanza un error"""
+        """ valida y entrega la Transferencia, o lanza un error"""
         if self._origen is None or self._destino is None:
             raise ValueError("Faltan la cuenta origen o la cuenta destino")
         if self._origen is self._destino:
             raise ValueError("La cuenta destino debe ser distinta de la origen")
         if self._monto is None or self._monto <= 0:
             raise ValueError("El monto debe ser mayor a cero")
+
         comision = 0
         if self._estrategia is not None:
             comision = self._estrategia.calcular(self._monto)
@@ -54,8 +60,9 @@ class TransferenciaBuilder:
             raise ValueError("Saldo insuficiente")
         return Transferencia(self._origen, self._destino, self._monto, comision)
 
+
 if __name__ == "__main__":
-    Bry = CuentaAhorros("Bry", 500)
+    bry = CuentaAhorros("Bry", 500)
     dayanna = CuentaCorriente("Dayanna", 1000)
 
     # (descripción, origen, destino, monto, estrategia)
