@@ -35,21 +35,19 @@ python menu.py
 ```
 Al empezar, el sistema pide el nombre del titular. Las cuentas de prueba son:
 
-| Titular | Tipo de cuenta | Saldo inicial |
-| Dayanna | Corriente      | S/ 2,000      |
-| Bry     | Ahorros        | S/ 500        |
-| Vali    | Corriente      | S/ 150,000    |
+- **Dayanna**: Corriente, S/ 2,000
+- **Bry**: Ahorros, S/ 500
+- **Vali**: Corriente, S/ 150,000
 
 Puedes escribir `salir` en lugar del nombre para cerrar el programa.
 
 Después aparece el menú del cliente:
 
-| Opción | Qué hace                   |
-| 1      | Consultar saldo            |
-| 2      | Hacer transferencia        |
-| 3      | Ver historial de auditoría |
-| 4      | Cambiar de usuario         |
-| 5      | Salir                      |
+1. Consultar saldo
+2. Hacer transferencia
+3. Ver historial de auditoría
+4. Cambiar de usuario
+5. Salir
 
 ### Cómo hacer una transferencia
 
@@ -64,17 +62,15 @@ Después aparece el menú del cliente:
 
 **Comisión** (patrón Strategy), según el tipo de cuenta de origen:
 
-| Cuenta origen | Comisión      |
-| Ahorros       | 1 % del monto |
-| Corriente     | S/ 5 fijos    |
+- Ahorros: 1 % del monto.
+- Corriente: S/ 5 fijos.
 
 **Aprobación** (patrón Chain of Responsibility), según el monto:
 
-| Monto             | Quién aprueba     |
-| Hasta S/ 1,000    | Cajero automático |
-| Hasta S/ 10,000   | Supervisor        |
-| Hasta S/ 100,000  | Comité de riesgo  |
-| Más de S/ 100,000 | Se rechaza        |
+- Hasta S/ 1,000: Cajero automático.
+- Hasta S/ 10,000: Supervisor.
+- Hasta S/ 100,000: Comité de riesgo.
+- Más de S/ 100,000: se rechaza.
 
 La aprobación se decide con el **monto** de la transferencia, sin sumar la comisión.
 
