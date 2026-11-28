@@ -1,3 +1,5 @@
+import math
+
 from cuenta import Cuenta, CuentaAhorros, CuentaCorriente
 from comisiones import ComisionAhorros, ComisionCorriente
 
@@ -46,8 +48,8 @@ class TransferenciaBuilder:
             raise ValueError("Faltan la cuenta origen o la cuenta destino")
         if self._origen is self._destino:
             raise ValueError("La cuenta destino debe ser distinta de la origen")
-        if self._monto is None or self._monto <= 0:
-            raise ValueError("El monto debe ser mayor a cero")
+        if self._monto is None or not math.isfinite(self._monto) or self._monto <= 0:
+            raise ValueError("El monto debe ser un número mayor a cero")
 
         comision = 0
         if self._estrategia is not None:
