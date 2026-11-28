@@ -33,7 +33,7 @@ def buscar_cuenta(cuentas, nombre):
     if cuenta is None:
         raise ValueError(f"No existe la cuenta de '{nombre}'")
     return cuenta
-    
+
 def leer_monto(mensaje):
     """ pide un monto y lo convierte a número, o lanza un error"""
     texto = input(mensaje)
@@ -59,6 +59,42 @@ def hacer_transferencia(origen, cuentas, servicio):
     except (ValueError, PermissionError) as error:
         print(f"No se pudo completar: {error}")
 
+def elegir_cliente(cuentas):
+    """ se pide el nombre del titular, y devuelve su cuenta, o none(nada) si escribe 'salir'."""
+    print("Cuentas de prueba:", ", ".join(c.titular for c in cuentas.values()))
+    while True:
+        nombre = input("Tu nombre de titular (o 'salir'): ")
+        if nombre.strip().lower() == "salir":
+            return None
+        try:
+            return buscar_cuenta(cuentas, nombre)
+        except ValueError as error:
+            print(error)
+
+def menu_cliente(origen, cuentas, servicio, auditoria):
+    """menú del cliente, se dvuelve True si quiere cambiar de usuario, False si sale"""
+    while True:
+        print(f"\n--- Cliente: {origen.titular} \n--- (Cuenta {origen.tipo()}) ---")
+        print("1. Consultar saldo")
+        print("2. Hacer transferencia")
+        print("3. Ver historial de auditoría")
+        print("4. Cambiar de usuario")
+        print("5. Salir")
+        opcion = input("Elige una opción: ").strip()
+
+        if opcion == "1":
+            origen.mostrar_saldo()
+        elif opcion == "2":
+            hacer_transferencia(origen, cuentas, servicio)
+        elif opcion == "3":
+            auditoria.mostrar()
+        elif opcion == "4":
+            return True
+        elif opcion == "5":
+            return False
+        else:
+            print("Opción no válida")
+
 def main():
     cuentas = crear_cuentas()
     auditoria = RegistroAuditoria()
@@ -68,30 +104,14 @@ def main():
         auditoria,
     )
 
-    print("----BANCO DIGITAL----")
+    print("==== BANCO DIGITAL ====")
     while True:
-        try:
-            origen = buscar_cuenta(cuentas, input("Tu nombre de titular: "))
+        origen = elegir_cliente(cuentas)
+        if origen is None:
             break
-        except ValueError as error:
-            print(error)
-
-    while True:
-        print(f"\n--- Cliente: {origen.titular} (cuenta {origen.tipo()}) ---")
-        print("1. Consultar saldo")
-        print("2. Hacer transferencia")
-        print("4. Salir")
-        opcion = input("Elige una opción: ").strip()
-
-        if opcion == "1":
-            origen.mostrar_saldo()
-        elif opcion == "2":
-            hacer_transferencia(origen, cuentas, servicio)
-        elif opcion == "4":
-            print("Hasta luego, gracias :3")
+        if not menu_cliente(origen, cuentas, servicio, auditoria):
             break
-        else:
-            print("Opción no válida")
+    print("¡Hasta luego, gracias :3!")
 
 if __name__ == "__main__":
     main()

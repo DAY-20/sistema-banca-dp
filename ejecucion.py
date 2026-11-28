@@ -27,6 +27,7 @@ class ProxyAutenticacion(EjecutorTransferencia):
 
     def ejecutar(self, transferencia):
         codigo = self._generar_codigo()
+        print("\n--- Verificación de dos factores (2FA) ---")
         print(f"[SMS simulado] Tu código de verificación es: {codigo}")
         ingresado = self._pedir_codigo("Ingresa el código: ")
         if ingresado != codigo:

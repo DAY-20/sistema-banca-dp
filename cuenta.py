@@ -20,7 +20,7 @@ class Cuenta:
         self.saldo -= monto
     def mostrar_saldo(self):
         """Imprime el saldo"""
-        print(f"{self.titular} tiene S/. {self.saldo}")
+        print(f"{self.titular} tiene S/. {self.saldo:.2f}")
 #Clases hijas
 class CuentaAhorros(Cuenta):
     def tipo(self):

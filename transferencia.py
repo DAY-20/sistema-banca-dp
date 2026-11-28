@@ -13,14 +13,11 @@ class Transferencia:
         self.total = monto + comision
 
     def __str__(self):
-        return (f"Transferencia de S/. {self.monto} "
+        return (f"Transferencia de S/. {self.monto:.2f} "
                 f"de {self.origen.titular} a {self.destino.titular} "
-                f"| comisión S/. {self.comision} | total S/. {self.total}")
-
-
+                f"| comisión S/. {self.comision:.2f} | total S/. {self.total:.2f}")
 class TransferenciaBuilder:
     """ armar una Transferencia y validarla"""
-
     def __init__(self):
         self._origen = None
         self._destino = None
